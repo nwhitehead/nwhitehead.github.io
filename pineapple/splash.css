@@ -1,0 +1,60 @@
+div.video {
+    width: 100%;
+    background-color: #000;
+    padding-top: 20px;
+    padding-bottom: 30px;
+}
+
+div.my-center-block {
+    width: 630px;
+    margin: 0 auto;
+}
+
+.deskbg {
+  min-height: 300px;
+  background-image: url('images/desk.jpg');
+  background-repeat: no-repeat;
+  background-size: 400px;
+  background-position: center right;
+}
+
+.jumbotron {
+  color: #fff;
+/*
+  background-color: #e75854;
+*/
+  background-color: #588754;
+  margin-bottom: 0;
+}
+
+div.jumbotron h1, h2 {
+  font-family: 'Roboto Slab', serif;
+}
+
+div.content h1, h2 {
+  font-family: 'Roboto Slab', serif;
+}
+
+div.content {
+  padding-bottom: 20px;
+}
+
+div.content h1 {
+  padding-bottom: 20px;
+}
+
+.signup {
+  color: #fff;
+  background-color: #20202b;
+}
+
+div.signup h2 {
+  padding: 30px 0 30px 0;
+}
+
+footer {
+  text-align: right;
+  padding: 20px 20px;
+  color: #d4dce3;
+  background-color: #4c6173;
+}
