@@ -12,9 +12,9 @@ div.my-center-block {
 
 .deskbg {
   min-height: 300px;
-  background-image: url('images/desk.jpg');
+  background-image: url('images/sketchcrop.png');
   background-repeat: no-repeat;
-  background-size: 400px;
+  background-size: 410px;
   background-position: center right;
 }
 
