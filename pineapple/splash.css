@@ -16,6 +16,11 @@ div.my-center-block {
     border: 1px solid #fff;
 }
 
+.btn-full {
+    width: 100%;
+    text-align: left;
+}
+
 .btn-custom:hover {
     color: #588754;
     background-color: #fff;
@@ -24,6 +29,16 @@ div.my-center-block {
 .btn-custom2:hover {
     color: #20202b;
     background-color: #fff;
+}
+
+.btn-custom3 {
+    color: #333;
+    background-color: transparent;
+    border: 1px solid #333;
+}
+.btn-custom3:hover {
+    color: #fff;
+    background-color: #20202b;
 }
 
 .deskbg {
@@ -36,9 +51,6 @@ div.my-center-block {
 
 .jumbotron {
   color: #fff;
-/*
-  background-color: #e75854;
-*/
   background-color: #588754;
   margin-bottom: 0;
 }
@@ -78,6 +90,10 @@ footer {
   padding: 20px 20px;
   color: #d4dce3;
   background-color: #4c6173;
+}
+
+div.contents.screenshots {
+  padding-bottom: 20px;
 }
 
 div.contents.screenshots p {
