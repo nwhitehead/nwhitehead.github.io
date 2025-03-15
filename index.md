@@ -1,5 +1,8 @@
-Here you can say lots of fun things about your site.
 
-Maybe say a some things about yourself.
+## Nathan
 
-Or maybe what you plan to blog about.
+I'm an independent software developer specializing in mathematical programming.
+I like to build amazing things to make your reality more interesting.
+
+Welcome to my personal blog. 
+
