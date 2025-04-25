@@ -87,6 +87,10 @@
             width: 100%;
             height: 400px;
         }
+        .special {
+            color: #ff0;
+            text-shadow: 1px 2px 2px #f00;
+        }
     </style>
 	<body>
         <div class="reveal">
@@ -96,6 +100,17 @@
                     <h2>🍒 Cherry Lip Sync</h2>
                     <p>Nathan Whitehead</p>
                     <p>Boise Code Camp 2025</p>
+<aside class="notes">
+<ul>
+<li>I'm going to present a case-study in developing
+    a small deep learning model on my desktop.</li>
+<li>The model is called "Cherry Lip Sync".</li>
+<li>It takes audio input and decides which 2D mouth shapes to
+    display to make animated characters with lip sync.</li>
+</ul>
+ 
+</aside>
+
                 </section>
                 <section data-markdown data-separator-notes="^Note:">
 
@@ -118,6 +133,9 @@
     <a href="https://nwhitehead.github.io/slides/">
         nwhitehead.github.io/slides/
     </a><br />
+    <aside class="notes">
+Some links. Also the slides I'm presenting are available on github.
+    </aside>
 </p>
 
 <!-- ---
@@ -132,8 +150,15 @@
 ---
 ## Why lip sync?
 
-Note:
-These are speaker notes.
+<aside class="notes">
+<ul>
+<li>My original motivation was that I was working on a project with voice recognition and text-to-speech voice synthesis.</li>
+<li>I wanted to connect make avatars talk on screen as a kind of "virtual tutor"
+for education.</li>
+<li>The hardest part was getting the lip sync looking
+reasonable. My initial attempts looked terrible.</li>
+</ul>
+</aside>
 ---
 Cinema  
 100 years of talking characters
@@ -145,6 +170,14 @@ Cinema
     <img width="180" src="gfx/transformer.png" /> <em>Transformers One</em> (2024) <br />
 </p>
 
+Note:
+* As soon as films had sound, animators wanted talking and singing characters
+* Lip sync starts at ad hoc drawing
+* to detailed research using photographs and experiments for realism
+* to stylized choices which simplify animation but keep emotion
+* to digital motion capture and 3D rendering
+* Here everything is pre-rendered.
+
 ---
 Video Games  
 30 years of talking characters
@@ -154,6 +187,14 @@ Video Games
     <img width="180" src="gfx/mafia2.jpg" /> <em>Mafia 2</em> (2010) <br />
     <img width="180" src="gfx/last.png" /> <em>The Last of Us: Part II</em> (2020) <br />
 </p>
+
+Note:
+* Games started with voice acting and pixel graphics
+* Moved to low poly count 3D models
+* Then high poly count 3D models
+* Modern games have arguably better lip sync technology than movies (longer content, high player expectations)
+* Games often have recorded animations, rendered in realtime.
+
 ---
 VTubers  
 10 years of digital puppetry
@@ -163,6 +204,12 @@ VTubers
     <img width="180" src="gfx/gawr.png" /> <em>Gawr Gura</em> (2020-) <br />
     <img width="150" src="gfx/kuzuha.png" /> <em>Kuzuha</em> (2020-) <br />
 </p>
+
+Note:
+* VTubing term popularized by Kizuna AI, but VTubing goes back further
+* Live-streamed performances, realtime animation
+* Can involve singing/performance, talking, commentary on games
+
 ---
 What do kids want to be when they grow up?
 (_Japan_)
@@ -179,6 +226,12 @@ What do kids want to be when they grow up?
     <span class="barlabel">Civil...</span> <span style="width: 320px;" class="bar">3.2%</span><br />
 </p>
 <small><a href="https://kids.nifty.com/research/work_20250102/">https://kids.nifty.com/research/work_20250102/</a></small>
+
+Note:
+* If you are older like me you might think this is a fringe thing
+* Actually hugely popular, especially with younger audience
+* In Japan more aspirational than YouTuber
+
 ---
 What do kids want to be when they grow up?
 (_USA_)
@@ -190,6 +243,11 @@ What do kids want to be when they grow up?
     <span class="barlabel">Astronaut</span> <span style="width: calc(11px*20);" class="bar">11%</span><br />
 </p>
 <small><a href="https://www.prnewswire.com/news-releases/lego-group-kicks-off-global-program-to-inspire-the-next-generation-of-space-explorers-as-nasa-celebrates-50-years-of-moon-landing-300885423.html">https://www.prnewswire.com/news-releases/lego-group-...-300885423.html</a></small>
+
+Note:
+* Data for USA does not distinguish YouTuber and VTuber
+* MOST popular occupation for elementary aged kids now
+
 ---
 
 > allowing yourself to speak through a character not only makes it more comfortable but also helps you find your voice as well
@@ -197,6 +255,11 @@ What do kids want to be when they grow up?
 > watching your own character babble to your own words in real time is always fun
 >
 > — <cite>luna olmewe (creator of Veadotube)</cite>
+
+Note:
+* This is the attraction of VTubing compared to face recording
+* Iron Mouse says it's like a "superhero costume"
+
 ---
 
 ### Veadotube
@@ -204,6 +267,11 @@ What do kids want to be when they grow up?
 <img src="gfx/veadotube.webp" />
 
 <small><a href="https://veado.tube/">https://veado.tube/</a></small>
+
+Note:
+* Lets you organize layers of images into states
+* State machine logic in graph at bottom
+* Audio volume can flip between "mouth closed" and "screaming" state
 
 ---
 ### 2D Lip Sync
@@ -214,6 +282,11 @@ What do kids want to be when they grow up?
     <img src="gfx/output.png" />
     <p style="margin-bottom: 200px;" />
 </p>
+
+Note:
+* For our model, we want audio input
+* Output is which lip shape to show at which time
+
 ---
 ### Output
 
@@ -221,10 +294,22 @@ What do kids want to be when they grow up?
 <img src="gfx/Chart2.png" width="400px" />
 
 2D lip sync uses 4 to 16 visemes.
+
+Note:
+* Output can be represented as timestamps and viseme
+* Example set of visemes (one possible style)
+* I picked 12 to match common practice for hand animation
+
 ---
 ## Data where?
 * Audio
 * Annotations
+
+Note:
+* Now 2D lip sync problem is defined, need training data
+* We need audio data
+* We need output annotations for that audio
+
 ---
 ### Audio
 
@@ -236,6 +321,11 @@ LibriSpeech
 * Transcribed, segmented, filtered
 
 <small><a href="https://www.openslr.org/12">https://www.openslr.org/12</a> (CC-BY) 😺</small>
+
+Note:
+* Other options also available
+* Mozilla has huge public dataset of voice recordings
+
 ---
 ### Rhubarb lip sync
 
@@ -247,6 +337,13 @@ LibriSpeech
 * audio → phonemes (pre deep learning)
 * phonemes → visemes (fixed algorithm)
 <small><a href="https://github.com/DanielSWolf/rhubarb-lip-sync">https://github.com/DanielSWolf/rhubarb-lip-sync</a> (MIT BSD) 😺</small>
+
+Note:
+* Thimbleweed Park was part of retro adventure game resurgence
+* Rhubarb created to allow smaller dev team to make game with voice acting
+* Recognizing phonemes is done with older algorithm, not as good as newer ones
+* Fixed algorithm has many heuristics and rules, searches for best answer
+
 ---
 ### Oculus Lip Sync
 <img src="gfx/lips.gif" />
@@ -257,6 +354,12 @@ LibriSpeech
 <small><a href="https://developers.meta.com/horizon/documentation/native/audio-ovrlipsync-native">https://developers.meta.com/horizon/documentation/native/audio-ovrlipsync-native</a></small>
 
 <small>(SDK license, closed source model) 😐️</small>
+
+Note:
+* SDK for developing virtual reality apps
+* Freely available, but deprecated
+* Doesn't support all platforms
+
 ---
 ### Adobe Animate
 <img src="gfx/adobe_animate.webp" />
@@ -266,6 +369,9 @@ LibriSpeech
 <small><a href="https://arxiv.org/abs/1910.08685">D. Aneja, W. Li. Real-Time Lip Sync for Live 2D Animation (2019)</a></small>
 
 <small>(Patented proprietary model) 😭</small>
+
+Note:
+* Relatively new functionality in Animate
 
 ---
 ### MeloTTS
@@ -282,6 +388,12 @@ LibriSpeech
     </div>
 </div>
 <small><a href="https://github.com/myshell-ai/MeloTTS">https://github.com/myshell-ai/MeloTTS</a> (MIT) 😺</small>
+
+Note:
+* Text to phonemes here uses standard libraries
+* Picking timing information is learned from annotated audio data
+* I hacked the MeloTTS implementation to output phoneme timing information
+
 ---
 ### Phoneme Map code
 
@@ -299,6 +411,12 @@ p2v_map = {
     ...
 }
 ```
+
+Note:
+* Some phonemes like AY can involve lip shape changes
+* Some phonemes work with more than 1 viseme (mouth more open or closed etc.),
+making choices here
+
 ---
 ```python
 for i, (ph, t) in list(enumerate(zip(phone_list, timestamps))):
@@ -315,6 +433,10 @@ for i, (ph, t) in list(enumerate(zip(phone_list, timestamps))):
         for i in range(n)
     ])
 ```
+
+Note:
+* This code maps from phoneme timing information to viseme timing information
+
 ---
 ### Audio to Vectors
 
@@ -337,6 +459,13 @@ for i, (ph, t) in list(enumerate(zip(phone_list, timestamps))):
 <p>
     <small>Diagram from <a href="https://www.mathworks.com/help/dsp/ref/dsp.stft.html">https://www.mathworks.com/help/dsp/ref/dsp.stft.html</a></small>
 </p>
+
+Note:
+* Could give audio samples directly to model, but there is lots of work
+on how audio works and on human voice in particular.
+* Map audio samples into overlapped windowed chunks that are
+converted to frequency domain and grouped into bins.
+
 ---
 ### Building Dataset
 
@@ -347,6 +476,13 @@ for i, (ph, t) in list(enumerate(zip(phone_list, timestamps))):
 | Tool output review | <span class="data">60 min</span> | <span class="time">8 hours</span> |
 
 Total about 1 hour of training data. (235 MB)
+
+Note:
+* I spend a day doing each row.
+* Tweaking MeloTTS was choosing good mapping for p2v for each sentence, tweaking various filter
+parameters.
+* Output review was doing bulk conversion of 5 minutes of audio at a time, then cutting out bad parts.
+
 ---
 ```python
 import torchaudio
@@ -366,6 +502,12 @@ data = pd.DataFrame(entries)
 data.to_parquet('./data/lipsync.parquet')
 ```
 <small><a href="https://pandas.pydata.org/">https://pandas.pydata.org/</a></small>
+
+Note:
+* Did some work to take directories full of `.mp3` and `.tsv` files into parquet
+* I know almost nothing about `pandas` and `parquet` and got it working in 1 day
+* Very nice to have 1 file with all training data
+
 ---
 ## How lip sync?
 
@@ -378,6 +520,12 @@ and speedrun the history of deep learning.
 <img src="gfx/UDL.jpg" width="400" />
 
 <small><a href="https://udlbook.github.io/udlbook/">https://udlbook.github.io/udlbook/</a> (free) 😺</small>
+
+Note:
+* Deep Learning is a vast field, lots of stuff changing.
+* This book is good, somewhat dense mathematically.
+* pytorch.org has lots of docs, examples if you don't care about math.
+
 ---
 ### Supervised Learning
 
@@ -385,6 +533,14 @@ and speedrun the history of deep learning.
 
 * Model maps input → output
 * Universal function approximation
+
+Note:
+* "AI" is kind of big nebulous term
+* "Machine learning" is a bit more specific, give data to a model and update model
+* "Deep learning" is more specific, stack neural layers in the model
+* "Supervised" means our training data has outputs
+* Big enough model can learn any function
+
 ---
 ### Smallest Model - Fit a Line
 
@@ -392,10 +548,30 @@ and speedrun the history of deep learning.
 * One number output
 
 <small>(Gauss, 1800)</small>
+
+Note:
+* Start with simplest model, line fitting 2D points
+
 ---
 <video data-autoplay src="gfx/SGD.mp4" poster="gfx/SGD.png"></video>
+
+Note:
+* Model is a line
+* Initial guess for model parameters not great
+* Loss function measures how bad the model is doing for some set of inputs
+* Update rule uses calculus to nudge model parameters in right direction
+* Subtraction of derivatives means we try to nudge loss down
+* After a few steps the model is doing better
+* You don't need to understand the math, just for fun
+
 ---
 <video data-autoplay src="gfx/Loss.mp4" poster="gfx/Loss.png"></video>
+
+Note:
+* Loss starts big, gets smaller quickly
+* Starts leveling off after more training
+* Never gets to 0, best line does not fit all points
+
 ---
 ### PyTorch Code
 
@@ -427,6 +603,9 @@ for epoch in range(3000):
     loss.backward()                  # Compute gradient
     optimizer.step()                 # Update model parameters
 ```
+Note:
+* Made some choices, such as learning rate, max epochs
+
 ---
 ### What is PyTorch doing for us?
 
@@ -448,10 +627,26 @@ for epoch in range(3000):
 <small>(Rosenblatt, 1950)</small>
 ---
 <video data-autoplay src="gfx/LinearScene.mp4" poster="gfx/LinearScene.png"></video>
+
+Note:
+* Inputs on left
+* Gray lines indicate how much weight each connection has
+* Right side does weighted sum, then passes through sigmoid function (called activation)
+* Maybe easier to understand as bottom formula with matrix
+
 ---
 <video data-autoplay src="gfx/LinearScene2.mp4" poster="gfx/LinearScene2.png"></video>
+
+Note:
+* Abstract the neural network idea into one box
+
 ---
 <video data-autoplay src="gfx/MultiInput.mp4" poster="gfx/MultiInput.png"></video>
+
+Note:
+* We will also need a version that can do two inputs.
+* Use a different matrix for each input.
+
 ---
 ```python
 class NeuralNetModel(torch.nn.Module): 
@@ -473,8 +668,18 @@ class NeuralNetModel(torch.nn.Module):
 * Linear / non-linear activations alternate
 
 <small>(Hinton, 1986)</small>
+
+Note:
+* One layer is limited
+* Stacking layers makes model more capable
+
 ---
 <video data-autoplay src="gfx/MLP.mp4" poster="gfx/MLP.png"></video>
+
+Note:
+* Stack layers, output of upper layer matches input of next layer
+* Input is 783 pixels from 28x28 grid
+* Output is 10 values, with 1 on correct digit (called one-hot encoding)
 ---
 ```python
 class MLP(torch.nn.Module): 
@@ -492,14 +697,14 @@ class MLP(torch.nn.Module):
     def forward(self, x):
         return self.net(x)
 ---
-### MNIST
+<!-- ### MNIST
 
 * Digit recognition of 28x28 grayscale images
 * MLP trains in a couple minutes on CPU
 * Ignores spatial structure
 
 <small><a href="https://en.wikipedia.org/wiki/MNIST_database">(MNIST 1994)</a></small>
----
+--- -->
 ### Deep Learning
 
 <div class="container">
@@ -517,10 +722,21 @@ class MLP(torch.nn.Module):
     </div>
 </div>
 
+Note:
+* At this point things start to become "deep learning".
+* At heart a pile of linear algebra with data flowing in.
+
 ---
 ### Time Series
 
 <video data-autoplay src="gfx/TimeSeries.mp4" poster="gfx/TimeSeries.png"></video>
+
+Note:
+* We have vectors coming in every 0.01 second.
+* Might need to keep track of what happened in past somehow.
+* Add explicit "current state" H.
+* Our model takes in H and X, outputs new state.
+
 ---
 ### GRU - Gated Recurrent Unit
 * Explicit internal state
@@ -529,12 +745,29 @@ class MLP(torch.nn.Module):
 * Update gate - How much to update state?
 
 <small>(Cho et al., 2014)</small>
+
+Note:
+* Line of research figuring out what to put in the box.
+* GRU is one nice answer.
 ---
 <video data-autoplay src="gfx/GRUScene.mp4" poster="gfx/GRUScene.png"></video>
+
+Note:
+* Build up more complicated units out of previously defined units and simple math operations.
+* Block diagram on left is same as equations on right.
+
 ---
 <video data-autoplay src="gfx/GRUBoxScene.mp4" poster="gfx/GRUBoxScene.png"></video>
+
+Note:
+* Abstract the complexity into one box again.
 ---
 <video data-autoplay src="gfx/LipSyncGRU.mp4" poster="gfx/LipSyncGRU.png"></video>
+
+Note:
+* Our first model is just one GRU and a linear layer
+* The larger internal size 32 gives model "space to think"
+* Different contexts might require same viseme
 ---
 ```python
 class SelectItem(nn.Module):
@@ -552,12 +785,22 @@ class LipSyncGRU(nn.Module):
             nn.Linear(32, 12))
     def forward(self, x):
         return self.net(x)
+```
+
+Note:
+* The GRU layer has multiple outputs, so some bookkeeping
+
 ---
 ### Training LipSync (v1) CPU
 
 <div class="cast" id="cpucast"></div>
 
 <small><p>00:02:38 on AMD Ryzen 5 3600 (4.1 GHz)</p></small>
+
+Note:
+* Demo is real recording, sped up.
+* Server is a 5 year old gaming rig, perfectly fine.
+
 ---
 ### Logging and Validation
 ```python
@@ -576,10 +819,23 @@ for epoch in range(epochs):
         'Validate': validate_loss,
     }, epoch)
 ```
+
+Note:
+* Want to plot loss on training set.
+* Split dataset into 90% training and 10% validation.
+* Validation lets us see if our training is working.
+* Use tensorboard to log these.
+* Validation loss is same as training but without grads.
+
 ---
 ### TensorBoard
 
 <img src="gfx/loss1.png"></img>
+
+Note:
+* Training seems to be working.
+* Validation loss levels out a bit higher than training loss.
+
 ---
 ### Torch: GPU
 
@@ -595,14 +851,22 @@ data_y = data['visemes']
 # NEW
 data_x = data['spectrogram'].to(device)
 data_y = data['visemes'].to(device)
-
 ```
+
+Note:
+* Lets make it faster by running on GPU.
+* In torch this is easy.
+* Detect appropriate device, then move data to device.
+
 ---
 ### Training LipSync (v1) GPU
 
 <div class="cast" id="gpucast"></div>
 
 <small><p>00:01:01 on NVIDIA RTX 3090 FE</p></small>
+
+Note:
+* More than 2x faster, would also be this fast on smaller GPUs.
 
 ---
 ### Tweak it
@@ -611,6 +875,10 @@ data_y = data['visemes'].to(device)
 * Stack more layers?
 * More bins in spectrogram on input?
 
+Note:
+* To improve model, we can try changing things and retraining.
+* After a few attempts, updated version uses 2 GRU layers and
+state of size 80.
 ---
 <video data-autoplay src="gfx/LipSyncGRU2.mp4" poster="gfx/LipSyncGRU2.png"></video>
 ---
@@ -631,12 +899,25 @@ class LipSyncGRU(nn.Module):
     def forward(self, x):
         return self.net(x)
 ```
+
+Note:
+* Not too many changes in model code.
+* Second GRU is 80, 80 instead of 26, 26.
+
 ---
 ### TensorBoard
 
 <img src="gfx/loss2.png"></img>
 
 Overfitting!
+
+Note:
+* This time we see a problem.
+* Validation bottoms out at epoch 30-40, then rises.
+* Training loss keeps going down.
+* This indicates our model thinks it is doing a better and better job,
+but actually it is not doing a better job on data it has not seen.
+* It is memorizing the training data.
 
 ---
 ### Extra tricks
@@ -653,6 +934,11 @@ Overfitting!
 # Put anywhere, fits any shape data
 nn.Dropout(p=0.2)
 ```
+
+Note:
+* Dropout layers only affect training.
+* Hopefully prevents memorizing input.
+
 ---
 ### Extra Tricks 
 
@@ -671,18 +957,24 @@ nn.BatchNorm1d(input_size),
 # Go back to normal
 Permute((0, 2, 1)),
 ```
+
+Note:
+* Normalization can help the model focus on
+what is important, not get distracted by big
+numbers.
+
 ---
 ### LipSync (v3)
 
 ```python
 self.net = nn.Sequential(
-    Permute((0, 2, 1)),
-    nn.BatchNorm1d(26),
-    Permute((0, 2, 1)),
-    nn.Dropout(p=0.2),
+    Permute((0, 2, 1)),      # NEW BatchNorm
+    nn.BatchNorm1d(26),      # NEW BatchNorm
+    Permute((0, 2, 1)),      # NEW BatchNorm
+    nn.Dropout(p=0.2),       # NEW Dropout
     nn.GRU(26, 80, batch_first=True),
     SelectItem(0),
-    nn.Dropout(p=0.2),
+    nn.Dropout(p=0.2),       # NEW Dropout
     nn.GRU(80, 80, batch_first=True),
     SelectItem(0),
     nn.Linear(80, 12),
@@ -693,10 +985,18 @@ self.net = nn.Sequential(
 
 <img src="gfx/loss3.png"></img>
 
+Note:
+* Validation loss levels out now
+
 ---
 ### Demo
 
 <video controls src="gfx/welcome.mp4" poster="gfx/welcome.png"></video>
+
+Note:
+* Demo is my own hand-drawn frames.
+* Audio is a synthetic voice that had trouble in Rhubarb (original motivation for project).
+* Created with Python script.
 
 ---
 
@@ -717,6 +1017,12 @@ modem.load_state_dict(
         map_location=torch.device('cpu'))
 )
 ```
+
+Note:
+* First step is to distribute model weights after training.
+* This requires user of model to have definition of model in torch.
+* Simple, popular on huggingface.
+
 ---
 ### Export to ONNX
 
@@ -737,6 +1043,11 @@ torch.onnx.export(model, x, 'model.onnx',
         'output': { 1: 'time'}})
 ```
 
+Note:
+* ONNX is model exchange format, standardized
+* Best for smaller models (not great for LLMs yet)
+* Includes description of architecture of model and trained weights.
+
 ---
 ### ONNX Runtime (ORT)
 
@@ -746,6 +1057,7 @@ torch.onnx.export(model, x, 'model.onnx',
 * All languages can use it, CPU, GPU
 * Works in the browser with HW acceleration (!)
 
+<small>(Getting lip sync working in browser in realtime is work-in-progress.)</small>
 ---
 
 ## Final Thoughts
@@ -765,9 +1077,9 @@ torch.onnx.export(model, x, 'model.onnx',
 
 ### Deep Learning Plan
 
-* Start with data
-* Clean your data
-* Compact your data
+* Start with <span class="special">data</span>
+* Clean your <span class="special">data</span>
+* Compact your <span class="special">data</span>
 * Quick turnaround means progress (<10 min)
 * Small models can be awesome
 
@@ -792,7 +1104,7 @@ onnxruntime # Deploying and sharing models
 
 > Anyone can cook <span style="color: #dd4;">a machine learning model</span>... but only the fearless can be great.
 >
-> — <cite>Gusteau, famous chef in **Ratatouille**</cite>
+> — <cite>Gusteau, famous chef in **Ratatouille**, probably</cite>
 
 ---
 The End
