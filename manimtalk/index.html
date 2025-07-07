@@ -4,7 +4,7 @@
 		<meta charset="utf-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
 
-		<title>🍒 Cherry Lip Sync</title>
+		<title>Creating animations with manim</title>
 
 		<link rel="stylesheet" href="dist/reset.css">
 		<link rel="stylesheet" href="dist/reveal.css">
@@ -129,6 +129,8 @@
 ---
 ## Why `manim`?
 
+<img src="gfx/manim.png" />
+
 ---
 ### Effective communication
 
@@ -162,35 +164,119 @@
 ### History
 
 * Original `manim` code for Grant's channel
-* Open sourced
-* Fork developed by community
+* Open sourced (MIT 😸)
+* Fork developed by community (2020-present)
 
 <a href="https://www.manim.community/">https://www.manim.community/</a>
 
-<small class="leftalign">Be careful!<br />StackOverflow responses and LLM answers may get confused
-    between original and community edition fork, they are slightly different.</small>
+<small class="leftalign"><span class="special">Be careful!</span><br />StackOverflow responses and LLM answers may get confused
+    between original and community edition fork, they are slightly different.<br />
+<br />New projects should always use the community edition.</small>
 
 ---
-What do kids want to be when they grow up?
-(_Japan_)
-<p class="leftalign" style="transform: scale(0.8);">
-    <span class="barlabel">Teacher</span> <span style="width: 650px;" class="bar">6.5%</span><br />
-    <span class="barlabel">Illustrator</span> <span style="width: 580px;" class="bar">5.8%</span><br />
-    <span class="barlabel">Singer</span> <span style="width: 520px;" class="bar">5.2%</span><br />
-    <span class="box"><span class="barlabel">VTuber</span> <span style="width: 460px;" class="bar">4.6%</span></span><br />
-    <span class="barlabel">Actor</span> <span style="width: 430px;" class="bar">4.3%</span><br />
-    <span class="barlabel">YouTuber</span> <span style="width: 350px;" class="bar">3.5%</span><br />
-    <span class="barlabel">Doctor</span> <span style="width: 350px;" class="bar">3.5%</span><br />
-    <span class="barlabel">Idol</span> <span style="width: 350px;" class="bar">3.5%</span><br />
-    <span class="barlabel">Musician</span> <span style="width: 340px;" class="bar">3.4%</span><br />
-    <span class="barlabel">Civil...</span> <span style="width: 320px;" class="bar">3.2%</span><br />
-</p>
-<small><a href="https://kids.nifty.com/research/work_20250102/">https://kids.nifty.com/research/work_20250102/</a></small>
+## Installation
+---
+### Linux
 
-Note:
-* If you are older like me you might think this is a fringe thing
-* Actually hugely popular, especially with younger audience
-* In Japan more aspirational than YouTuber
+```bash
+    # Make sure dependencies are present
+    sudo apt update
+    sudo apt install build-essential python3-dev \
+        libcairo2-dev libpango1.0-dev texlive-full
+
+    # Install uv (python package tool)
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+
+    # Start a uv project
+    uv init projectname && cd projectname
+
+    # Add manim to project
+    uv add manim
+```
+
+<p><small><a href="https://docs.astral.sh/uv/getting-started/installation/">https://docs.astral.sh/uv/getting-started/installation/</a></small></p>
+<p><small><a href="https://docs.manim.community/en/stable/installation/uv.html">https://docs.manim.community/en/stable/installation/uv.html</a></small></p>
+---
+### Windows
+
+```powershell
+    # Install uv (python package tool)
+    powershell -ExecutionPolicy ByPass -c `
+        "irm https://astral.sh/uv/install.ps1 | iex"
+
+    # Start a uv project
+    uv init projectname && cd projectname
+
+    # Add manim to project
+    uv add manim
+```
+
+---
+### MacOS
+
+```bash
+    # Install uv (python package tool)
+    curl -LsSf https://astral.sh/uv/install.sh | sh
+
+    # Start a uv project
+    uv init projectname && cd projectname
+
+    # Add manim to project
+    uv add manim
+```
+
+---
+## Basics
+---
+### Python Package
+
+```py
+    from manim import *
+
+    class CreateCircle(Scene):
+        def construct(self):
+            # Create a circle
+            circle = Circle()
+            # Set the color and transparency
+            circle.set_fill(PINK, opacity=0.5)
+            # Show the circle being drawn
+            self.play(Create(circle))
+```
+<small>Example file `example.py`</small>
+---
+```bash
+    manim render -pql example.py CreateCircle
+```
+<video src="gfx/CreateCircle.mp4" controls></video>
+<small><code>media/videos/example/480p15/CreateCircle.mp4</code></small>
+---
+### Options
+
+```bash
+    manim render -pql example.py CreateCircle
+```
+```text
+        -p      Preview the rendered video
+        -ql     Choose low quality
+
+    Quality levels:
+        -ql     854x480   15FPS
+        -qm     1280x720  30FPS
+        -qh     1920x1080 60FPS
+        -qp     2560x1440 60FPS
+        -qk     3840x2160 60FPS    
+```
+---
+### `-qp` Quality Demo
+<video src="gfx/CreateCircle-qp.mp4" controls></video>
+<small><code>media/videos/example/1440p60/CreateCircle.mp4</code></small>
+
+---
+### Quality Levels
+
+* <span class="special">Low</span> quality level is fastest, development 
+* <span class="special">Medium</span> is good for slides
+* <span class="special">High</span> or higher is good for YouTube
 
 ---
 What do kids want to be when they grow up?
