@@ -274,9 +274,181 @@
 ---
 ### Quality Levels
 
-* <span class="special">Low</span> quality level is fastest, development 
+* <span class="special">Low</span> quality level is fastest, for development 
 * <span class="special">Medium</span> is good for slides
 * <span class="special">High</span> or higher is good for YouTube
+
+---
+### Concepts
+
+* `manim` is a Python package
+* `manim` is a command line tool
+* Define classes that descent from `Scene`
+* More than 1 `Scene` per file allowed
+* Render scene(s) using command line tool
+
+---
+
+```py
+    # Draw two things next to each other
+    # NOTES: Actually generates a static image, not a video.
+
+    class TwoObjects(Scene):
+        def construct(self):
+            square = Square()
+            square.set_fill(BLUE, opacity=1.0)
+            circle = Circle()
+            circle.set_fill(PINK, opacity=1.0)
+            square.next_to(circle, RIGHT)
+            self.add(square)
+            self.add(circle)
+```
+---
+<img src="gfx/TwoObjects_ManimCE_v0.19.0.png" />
+---
+```py
+    # Show two objects, one then the next
+    # NOTES: They pop into existence.
+
+    class TwoObjectsWait(Scene):
+        def construct(self):
+            square = Square()
+            square.set_fill(RED, opacity=1.0)
+            circle = Circle()
+            circle.set_fill(YELLOW, opacity=1.0)
+            square.next_to(circle, RIGHT)
+            self.add(square)
+            self.wait()
+            self.add(circle)
+            self.wait()
+```
+---
+<video src="gfx/TwoObjectsWait.mp4" controls></video>
+---
+
+```py
+    # Draw two objects, one then the next
+    # NOTES: `Create` animates drawing based on
+    #        vectorization of shape.
+
+    class TwoObjectsDraw(Scene):
+        def construct(self):
+            square = Square()
+            square.set_fill(GREEN, opacity=1.0)
+            circle = Circle()
+            circle.set_fill(PURPLE, opacity=1.0)
+            square.next_to(circle, RIGHT)
+            self.play(Create(square))
+            self.wait()
+            self.play(Create(circle))
+            self.wait()
+```
+---
+<video src="gfx/TwoObjectsDraw.mp4" controls></video>
+---
+```py
+    # Draw three objects with manual positioning
+
+    class ThreeObjects(Scene):
+        def construct(self):
+            for i in range(3):
+                square = Square()
+                square.shift(RIGHT * 3 * i + LEFT * 3)
+                self.play(Create(square))
+                self.wait()
+```
+---
+<video src="gfx/ThreeObjects.mp4" controls></video>
+---
+```py
+    # Draw shapes with different positions and alignments
+
+    class ObjectPlacement(Scene):
+        def construct(self):
+            circle = Circle()
+            square = Square()
+            triangle = Triangle()
+            circle.move_to(LEFT * 2)
+            square.next_to(circle, LEFT)
+            triangle.align_to(circle, LEFT)
+            self.add(circle, square, triangle)
+            self.wait(1)
+```
+---
+<video src="gfx/ObjectPlacement.mp4" controls></video>
+---
+
+```py
+    # Draws a square not at default position then slide left
+    # NOTES: `shift()` does adjustment immediately,
+    #        `animate.shift()` makes an animation.
+
+    class ShiftObject(Scene):
+        def construct(self):
+            square = Square()
+            square.shift(RIGHT * 2)
+            square.set_fill(RED, opacity=0.5)
+            self.play(Create(square))
+            self.play(square.animate.shift(LEFT * 2))
+```
+
+---
+<video src="gfx/ShiftObject.mp4" controls></video>
+---
+
+```py
+    # Draws a square and a circle then slides them to the right
+    # NOTES: We construct a `VGroup` to contain multiple
+    #        `Mobject`s.
+
+    class ShiftObjects(Scene):
+        def construct(self):
+            square = Square()
+            circle = Circle()
+            circle.next_to(square, RIGHT)
+            group = VGroup()
+            group.add(square)
+            group.add(circle)
+            self.play(Create(group))
+            self.play(group.animate.shift(RIGHT))
+```
+---
+<video src="gfx/ShiftObjects.mp4" controls></video>
+---
+
+```py
+    # Draws a rectangle, rectangle with internal grid, and arrow
+    # NOTES: Uses `get_center()` and `get_top()` to get points
+    #        of existing `Mobject`s.
+    class DemoObjects(Scene):
+        def construct(self):
+            rect = Rectangle(width=2.0, height=4.0)
+            grid = Rectangle(width=4.0, height=2.0,
+                    grid_xstep=1.0, grid_ystep=1.0)
+            grid.next_to(rect, RIGHT)
+            arrow = Arrow(start=grid.get_center(),
+                    end=rect.get_top(), buff=0, color=YELLOW)
+            group = VGroup()
+            group.add(rect, grid, arrow)
+            self.play(Create(group), run_time=4.0)
+            self.wait()
+```
+
+---
+<video src="gfx/DemoObjects.mp4" controls></video>
+---
+
+
+
+
+
+
+
+
+
+
+
+
 
 ---
 What do kids want to be when they grow up?

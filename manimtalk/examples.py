@@ -55,6 +55,31 @@ class TwoObjectsDraw(Scene):
         self.play(Create(circle))
         self.wait()
 
+# ThreeObjects
+## Draw three objects with manual positioning
+
+class ThreeObjects(Scene):
+    def construct(self):
+        for i in range(3):
+            square = Square()
+            square.shift(RIGHT * 3 * i + LEFT * 3)
+            self.play(Create(square))
+            self.wait()
+
+# ObjectPlacement
+## Draw shapes with different positions and alignments
+
+class ObjectPlacement(Scene):
+    def construct(self):
+        circle = Circle()
+        square = Square()
+        triangle = Triangle()
+        circle.move_to(LEFT * 2)
+        square.next_to(circle, LEFT)
+        triangle.align_to(circle, LEFT)
+        self.add(circle, square, triangle)
+        self.wait(1)
+
 # MoveObject
 ## Draws a square then slides it to the right
 
@@ -99,12 +124,14 @@ class ShiftObjects(Scene):
 class DemoObjects(Scene):
     def construct(self):
         rect = Rectangle(width=2.0, height=4.0)
-        grid = Rectangle(width=4.0, height=2.0, grid_xstep=1.0, grid_ystep=1.0)
+        grid = Rectangle(width=4.0, height=2.0,
+                grid_xstep=1.0, grid_ystep=1.0)
         grid.next_to(rect, RIGHT)
-        arrow = Arrow(start=grid.get_center(), end=rect.get_top(), buff=0, color=YELLOW)
+        arrow = Arrow(start=grid.get_center(),
+                end=rect.get_top(), buff=0, color=YELLOW)
         group = VGroup()
         group.add(rect, grid, arrow)
-        self.play(Create(group))
+        self.play(Create(group), run_time=4.0)
         self.wait()
 
 # Show a representation of a linked list with arrows
