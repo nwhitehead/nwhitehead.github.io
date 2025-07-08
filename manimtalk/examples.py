@@ -214,21 +214,19 @@ class LinkedListRemove2(Scene):
 
 ## Returns group of binary tree
 def bt(value, left=None, right=None):
-    node = Circle(0.75)
-    label = Text(f'{value}')
+    root = VGroup(Circle(0.75), Text(f'{value}'))
+    l = left if left is not None else Circle(0.25, stroke_opacity=0)
+    r = right if right is not None else Circle(0.25, stroke_opacity=0)
     # Group left and right next to each other, top aligned
-    if right is not None and left is not None:
-        right.next_to(left, RIGHT)
-        right.align_to(left, UP)
-    children = VGroup()
-    if left is not None: children.add(left)
-    if right is not None: children.add(right)
-    children.next_to(node, DOWN, buff=0.5)
-    tree = VGroup(node, label, children)
+    r.next_to(l, RIGHT)
+    r.align_to(l, UP)
+    children = VGroup(l, r)
+    children.next_to(root, DOWN, buff=0.5)
+    tree = VGroup(root, children)
     if left is not None:
-        tree.add(Arrow(start=node.get_bottom(), end=left.get_top(), buff=0, stroke_width=3.0))
+        tree.add(Arrow(start=root.get_bottom(), end=l.get_top(), buff=0, stroke_width=3.0))
     if right is not None:
-        tree.add(Arrow(start=node.get_bottom(), end=right.get_top(), buff=0, stroke_width=3.0))
+        tree.add(Arrow(start=root.get_bottom(), end=r.get_top(), buff=0, stroke_width=3.0))
     return tree
 
 class BinaryTree1(Scene):
@@ -289,22 +287,71 @@ class BinaryTree2(Scene):
 class BinaryTree3(Scene):
     def construct(self):
         tree1 = bt(10, bt(7, bt(5), bt(8)), bt(11))
-        tree1.center()
+        tree1.center().scale(0.7)
         self.play(Create(tree1))
-        self.wait()
-        node = VGroup(Circle(0.75, color=BLUE), Text('6'))
+        node = VGroup(Circle(0.75, color=BLACK,
+                             stroke_color=BLUE,
+                             fill_opacity=1),
+                      Text('6')).scale(0.7)
         node.next_to(tree1[0], UP) # above 10 circle
         self.play(Create(node))
+        self.play(node.animate.next_to(tree1[1][0][0], UP))
         self.wait()
-        self.play(node.animate.next_to(tree1[2][0][0], UP)) # above 7
-        self.wait()
-        self.play(node.animate.next_to(tree1[2][0][2][0], UP)) # above 5
+        self.play(node.animate.next_to(tree1[1][0][1][0], UP))
         self.wait()
         # Slide it near where it needs to be in new tree
-        self.play(node.animate.shift(3.5 * DOWN + RIGHT))
+        self.play(node.animate.shift(2.5 * DOWN + 0.5 * RIGHT))
         self.wait()
         tree2 = bt(10, bt(7, bt(5, None, bt(6)), bt(8)), bt(11))
-        tree2.center()
+        tree2.center().scale(0.7)
         self.remove(node)
         self.play(Transform(tree1, tree2))
         self.wait()
+
+### GRU
+
+class Activation(VGroup):
+    def __init__(self, height=1.0, tanh=False):
+        s = Rectangle(fill_opacity=1.0, width=2.0,
+                      height=2.0 * height, fill_color=BLACK)
+        p1 = np.array([-1, -0.8 * height, 0])
+        p2 = np.array([0, -0.8 * height, 0])
+        p3 = np.array([0, 0.8 * height, 0])
+        p4 = np.array([1, 0.8 * height, 0])
+        b = CubicBezier(p1, p2, p3, p4, color=BLUE)
+        a = Line(LEFT + DOWN * 0.8 * height,
+                 RIGHT + DOWN * 0.8 * height,
+                 stroke_width=2.0) if not tanh else Line(
+                     LEFT, RIGHT, stroke_width=2.0)
+        self.inputs = [s.get_top()]
+        self.outputs = [s.get_bottom()]
+        super().__init__(s, a, b)
+
+class Activation1(Scene):
+    def construct(self):
+        act1 = Activation()
+        act2 = Activation(tanh=True).next_to(act1, DOWN)
+        network = VGroup(act1, act2).center()
+        self.play(Create(network))
+        self.wait()
+
+class LinearActivation(VGroup):
+    def __init__(self, inputs=1, txt=r"$d_{in}, d_{out}$",
+                 activation_height=1.0, tanh=False):
+        ab = Activation(height=activation_height, tanh=tanh).set_z_index(1)
+        linear = VGroup(
+            Rectangle(width=2.0, height=0.5, fill_opacity=1, 
+                      fill_color=BLACK).set_z_index(1),
+            Tex(txt).scale(0.8),
+        ).set_z_index(1).next_to(ab, UP)
+        c = Line(linear[0].get_bottom(), ab.get_top())
+        cxs = VGroup([Line(ORIGIN, UP * 0.2) for i in
+                      range(inputs)]).arrange(buff=2.8 / inputs).shift(linear[0].get_top()).shift(UP * 0.1)
+        cy = Line(ab.get_bottom(), ab.get_bottom() + DOWN * 0.2)
+        self.cy = cy 
+        self.cxs = cxs
+        super().__init__(linear, ab, cxs, c, cy)
+    def get_inputs(self):
+        return [c.get_center() for c in self.cxs]
+    def get_outputs(self):
+        return [self.cy.get_center()]
