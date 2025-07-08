@@ -219,12 +219,16 @@
     powershell -ExecutionPolicy ByPass -c `
         "irm https://astral.sh/uv/install.ps1 | iex"
 
+    # Install Python
+    uv python install
+    
     # Start a uv project
     uv init projectname && cd projectname
 
     # Add manim to project
     uv add manim
 ```
+<small>Also need FFMPEG from <a href="https://ffmpeg.org/download.html">https://ffmpeg.org/download.html</a></small>
 
 ---
 ### MacOS
