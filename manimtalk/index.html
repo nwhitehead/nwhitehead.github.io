@@ -475,7 +475,7 @@ class LinkedList1(Scene):
 <video src="gfx/LinkedList1.mp4" controls></video>
 ---
 
-```py
+```py stretch
 # Show a linked list animation for removing middle element
 
 class LinkedListRemove(Scene):
@@ -495,7 +495,34 @@ class LinkedListRemove(Scene):
 <video src="gfx/LinkedListRemove.mp4" controls></video>
 ---
 
+```py stretch
+# Show a linked list animation for removing middle element
+## This time with more details.
 
+class LinkedListRemove2(Scene):
+    def construct(self):
+        # ... Mostly same setup code as LinkedList1
+        arrow12 = Arrow(start=node1.get_center() + RIGHT / 2,
+                        end=node2.get_left(), buff=0,
+                        color=YELLOW)
+        arrow23 = Arrow(start=node2.get_center() + RIGHT / 2,
+                        end=node3.get_left(), buff=0,
+                        color=YELLOW)
+        node1_text = Text('a', color=BLUE).next_to(node1, UP)
+        node2_text = Text('b', color=BLUE).next_to(node2, UP)
+        node3_text = Text('c', color=BLUE).next_to(node3, UP)
+        node3_x = Dot(radius=0.3, color=YELLOW).shift(
+            node3.get_center() + RIGHT / 2)
+
+        group = VGroup(node1, node1_text, node2, node2_text,
+                       node3, node3_text, node3_x,
+                       arrow12, arrow23)
+        # ... Same animation code as before
+```
+
+---
+<video src="gfx/LinkedListRemove2.mp4" controls></video>
+---
 
 
 

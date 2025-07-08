@@ -178,25 +178,36 @@ class LinkedListRemove(Scene):
 
 class LinkedListRemove2(Scene):
     def construct(self):
-        node1 = Rectangle(width=2.0, height=1.0, grid_xstep=1.0)
-        node1_text = Text('a', color=BLUE).next_to(node1, UP)
-        node2 = Rectangle(width=2.0, height=1.0, grid_xstep=1.0)
+
+        node1 = Rectangle(width=2.0, height=1.0,
+                          grid_xstep=1.0)
+        node2 = Rectangle(width=2.0, height=1.0,
+                          grid_xstep=1.0)
         node2.next_to(node1, RIGHT, buff=1.0)
-        node2_text = Text('b', color=BLUE).next_to(node2, UP)
-        arrow12 = Arrow(start=node1.get_center() + RIGHT * 0.5, end=node2.get_left(), buff=0, color=YELLOW)
-        node3 = Rectangle(width=2.0, height=1.0, grid_xstep=1.0)
+        node3 = Rectangle(width=2.0, height=1.0,
+                          grid_xstep=1.0)
         node3.next_to(node2, RIGHT, buff=1.0)
+
+        arrow12 = Arrow(start=node1.get_center() + RIGHT / 2,
+                        end=node2.get_left(), buff=0, color=YELLOW)
+        arrow23 = Arrow(start=node2.get_center() + RIGHT / 2,
+                        end=node3.get_left(), buff=0, color=YELLOW)
+        node1_text = Text('a', color=BLUE).next_to(node1, UP)
+        node2_text = Text('b', color=BLUE).next_to(node2, UP)
         node3_text = Text('c', color=BLUE).next_to(node3, UP)
-        arrow23 = Arrow(start=node2.get_center() + RIGHT * 0.5, end=node3.get_left(), buff=0, color=YELLOW)
-        node3_x = Dot(radius=0.3, color=YELLOW).shift(node3.get_center() + RIGHT * 0.5)
-        group = VGroup(node1, node1_text, node2, node2_text, node3, node3_text, arrow12, arrow23, node3_x)
+        node3_x = Dot(radius=0.3, color=YELLOW).shift(
+            node3.get_center() + RIGHT / 2)
+
+        group = VGroup(node1, node1_text, node2, node2_text,
+                       node3, node3_text, node3_x, arrow12, arrow23)
         group.shift(LEFT * 2.0)
         self.play(Create(group))
         self.wait()
         self.play(FadeOut(node2, node2_text, arrow23))
         self.wait()
-        newarrow12 = Arrow(start=node1.get_center() + RIGHT * 0.5, end=node3.get_left(), buff=0, color=YELLOW)
-        self.play(Transform(arrow12, newarrow12))
+        arrow13 = Arrow(start=node1.get_center() + RIGHT / 2,
+                        end=node3.get_left(), buff=0, color=YELLOW)
+        self.play(Transform(arrow12, arrow13))
         self.wait()
 
 # Let's make a binary tree with functions
