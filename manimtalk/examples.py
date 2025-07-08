@@ -213,7 +213,7 @@ class LinkedListRemove2(Scene):
 # Let's make a binary tree with functions
 
 ## Returns group of binary tree
-def btree(value, left=None, right=None):
+def bt(value, left=None, right=None):
     node = Circle(0.75)
     label = Text(f'{value}')
     # Group left and right next to each other, top aligned
@@ -233,7 +233,78 @@ def btree(value, left=None, right=None):
 
 class BinaryTree1(Scene):
     def construct(self):
-        tree = btree(7, btree(5), btree(10, btree(8), btree(11)))
+        tree = bt(7, bt(5), bt(10, bt(8), bt(11)))
         tree.center()
         self.play(Create(tree))
+        self.wait()
+
+# This one didn't work
+#
+# # Let's make trees that can be animated
+# ## Need to keep same `Mobject` as nodes in different trees
+
+# def node(value):
+#     node = Circle(0.75)
+#     label = Text(f'{value}')
+#     return VGroup(node, label)
+
+# def bt(root, left=None, right=None):
+#     l = left if left is not None else Circle(0.75, stroke_opacity=0)
+#     r = right if right is not None else Circle(0.75, stroke_opacity=0)
+#     # Group left and right next to each other, top aligned
+#     r.next_to(l, RIGHT)
+#     r.align_to(l, UP)
+#     children = VGroup(l, r)
+#     children.next_to(root, DOWN, buff=0.5)
+#     tree = VGroup(root, children)
+#     if left is not None:
+#         tree.add(Arrow(start=root.get_bottom(), end=l.get_top(), buff=0, stroke_width=3.0))
+#     if right is not None:
+#         tree.add(Arrow(start=root.get_bottom(), end=r.get_top(), buff=0, stroke_width=3.0))
+#     return tree
+
+# class BinaryTree2(Scene):
+#     def construct(self):
+#         nodes = [node(5), node(7), node(8), node(10), node(11)]
+#         tree1 = bt(nodes[1], nodes[0], bt(nodes[3], nodes[2], nodes[4]))
+#         tree1.center()
+#         tree2 = bt(nodes[3], bt(nodes[1], nodes[0], nodes[2]), nodes[4])
+#         tree2.center()
+#         self.play(Create(tree1))
+#         self.play(Transform(tree1, tree2), run_time=4)
+#         self.wait()
+
+class BinaryTree2(Scene):
+    def construct(self):
+        tree1 = bt(7, bt(5), bt(10, bt(8), bt(11)))
+        tree1.center()
+        tree2 = bt(10, bt(7, bt(5), bt(8)), bt(11))
+        tree2.center()
+        self.play(Create(tree1))
+        self.wait()
+        self.play(FadeTransform(tree1, tree2))
+        self.wait()
+
+# Let's show an insert path
+class BinaryTree3(Scene):
+    def construct(self):
+        tree1 = bt(10, bt(7, bt(5), bt(8)), bt(11))
+        tree1.center()
+        self.play(Create(tree1))
+        self.wait()
+        node = VGroup(Circle(0.75, color=BLUE), Text('6'))
+        node.next_to(tree1[0], UP) # above 10 circle
+        self.play(Create(node))
+        self.wait()
+        self.play(node.animate.next_to(tree1[2][0][0], UP)) # above 7
+        self.wait()
+        self.play(node.animate.next_to(tree1[2][0][2][0], UP)) # above 5
+        self.wait()
+        # Slide it near where it needs to be in new tree
+        self.play(node.animate.shift(3.5 * DOWN + RIGHT))
+        self.wait()
+        tree2 = bt(10, bt(7, bt(5, None, bt(6)), bt(8)), bt(11))
+        tree2.center()
+        self.remove(node)
+        self.play(Transform(tree1, tree2))
         self.wait()

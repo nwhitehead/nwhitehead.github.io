@@ -446,6 +446,8 @@ class DemoObjects(Scene):
 ---
 ## CS Examples
 ---
+### Linked List
+---
 
 ```py stretch
 # Show a representation of a linked list with arrows
@@ -487,6 +489,7 @@ class LinkedListRemove(Scene):
         self.wait()
         arrow13 = Arrow(start=node1.get_center() + RIGHT / 2,
                         end=node3.get_left(), buff=0)
+        # Change arrow12 into arrow13 smoothly
         self.play(Transform(arrow12, arrow13))
         self.wait()
 ```
@@ -523,6 +526,62 @@ class LinkedListRemove2(Scene):
 ---
 <video src="gfx/LinkedListRemove2.mp4" controls></video>
 ---
+### Binary Tree
+---
+```py stretch
+def bt(value, left=None, right=None):
+    """ Returns a group that is the binary tree """
+    node = Circle(0.75)
+    label = Text(f'{value}')
+    # Group left and right next to each other, top aligned
+    if right is not None and left is not None:
+        right.next_to(left, RIGHT)
+        right.align_to(left, UP)
+    children = VGroup()
+    if left is not None: children.add(left)
+    if right is not None: children.add(right)
+    children.next_to(node, DOWN, buff=0.5)
+    tree = VGroup(node, label, children)
+    if left is not None:
+        tree.add(Arrow(start=node.get_bottom(), buff=0,
+                       end=left.get_top(), stroke_width=3))
+    if right is not None:
+        tree.add(Arrow(start=node.get_bottom(), buff=0,
+                       end=right.get_top(), stroke_width=3))
+    return tree
+```
+---
+```py stretch
+class BinaryTree1(Scene):
+    def construct(self):
+        tree = bt(7, bt(5), bt(10, bt(8), bt(11)))
+        tree.center()
+        self.play(Create(tree))
+        self.wait()
+```
+---
+<video src="gfx/BinaryTree1.mp4" controls></video>
+---
+
+```py stretch
+class BinaryTree2(Scene):
+    def construct(self):
+        tree1 = bt(7, bt(5), bt(10, bt(8), bt(11)))
+        tree1.center()
+        tree2 = bt(10, bt(7, bt(5), bt(8)), bt(11))
+        tree2.center()
+        self.play(Create(tree1))
+        self.wait()
+        self.play(FadeTransform(tree1, tree2))
+        self.wait()
+```
+---
+<video src="gfx/BinaryTree2.mp4" controls></video>
+---
+
+
+
+
 
 
 
