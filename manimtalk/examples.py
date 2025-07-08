@@ -295,7 +295,7 @@ class BinaryTree3(Scene):
                       Text('6')).scale(0.7)
         node.next_to(tree1[0], UP) # above 10 circle
         self.play(Create(node))
-        self.play(node.animate.next_to(tree1[1][0][0], UP))
+        self.play(node.animate.next_to(tree1[1][0], UP))
         self.wait()
         self.play(node.animate.next_to(tree1[1][0][1][0], UP))
         self.wait()
@@ -338,7 +338,8 @@ class Activation1(Scene):
 class LinearActivation(VGroup):
     def __init__(self, inputs=1, txt=r"$d_{in}, d_{out}$",
                  activation_height=1.0, tanh=False):
-        ab = Activation(height=activation_height, tanh=tanh).set_z_index(1)
+        ab = Activation(height=activation_height, tanh=tanh) \
+                .set_z_index(1)
         linear = VGroup(
             Rectangle(width=2.0, height=0.5, fill_opacity=1, 
                       fill_color=BLACK).set_z_index(1),
@@ -346,7 +347,9 @@ class LinearActivation(VGroup):
         ).set_z_index(1).next_to(ab, UP)
         c = Line(linear[0].get_bottom(), ab.get_top())
         cxs = VGroup([Line(ORIGIN, UP * 0.2) for i in
-                      range(inputs)]).arrange(buff=2.8 / inputs).shift(linear[0].get_top()).shift(UP * 0.1)
+            range(inputs)]) \
+            .arrange(buff=2.8 / inputs) \
+            .shift(linear[0].get_top() + UP * 0.1)
         cy = Line(ab.get_bottom(), ab.get_bottom() + DOWN * 0.2)
         self.cy = cy 
         self.cxs = cxs
@@ -355,3 +358,29 @@ class LinearActivation(VGroup):
         return [c.get_center() for c in self.cxs]
     def get_outputs(self):
         return [self.cy.get_center()]
+
+class LinearScene(Scene):
+    def construct(self):
+        b = LinearActivation()
+        lbl_x = Tex("$x$").next_to(b, UP)
+        lbl_y = Tex("$y$").next_to(b, DOWN)
+        v = VGroup(lbl_x, b, lbl_y)
+        self.play(Create(v))
+        self.wait(1)
+
+class MLP(Scene):
+    def construct(self):
+        b = LinearActivation(txt=r'784, 200',
+                             activation_height=0.5)
+        lbl_x = Tex("$x$").next_to(b, UP)
+        c = LinearActivation(txt=r'200, 200', 
+                             activation_height=0.5) \
+            .next_to(b, DOWN, buff=-0.05)
+        d = LinearActivation(txt=r'200, 10',
+                             activation_height=0.5) \
+            .next_to(c, DOWN, buff=-0.05)
+        lbl_y = Tex("$y$").next_to(d, DOWN)
+        v = VGroup(lbl_x, b, c, d, lbl_y) \
+            .center().scale(0.8)
+        self.play(Create(v), run_time=4)
+        self.wait(1)
