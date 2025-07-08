@@ -12,7 +12,7 @@
 		<link rel="stylesheet" type="text/css" href="./asciinema-player.css" />
 
 		<!-- Theme used for syntax highlighted code -->
-		<link rel="stylesheet" href="plugin/highlight/monokai.css">
+		<link rel="stylesheet" href="plugin/highlight/github-dark.css">
     </head>
     <style>
 
@@ -139,6 +139,13 @@
 <p><nobr>pure text</nobr> → <nobr>one diagram</nobr> → <nobr>sequence of diagrams</nobr> → <span class="special">animation</span> → <nobr>interactive animation</nobr></p>
 
 ---
+### Correctness
+
+* We like <span class="special">_version control_</span>
+* Prefer <span class="special">_real data_</span> over fake data
+* Coders gotta code ❤️
+
+---
 ### Background
 
 <p>
@@ -231,16 +238,16 @@
 ### Python Package
 
 ```py
-    from manim import *
+from manim import *
 
-    class CreateCircle(Scene):
-        def construct(self):
-            # Create a circle
-            circle = Circle()
-            # Set the color and transparency
-            circle.set_fill(PINK, opacity=0.5)
-            # Show the circle being drawn
-            self.play(Create(circle))
+class CreateCircle(Scene):
+    def construct(self):
+        # Create a circle
+        circle = Circle()
+        # Set the color and transparency
+        circle.set_fill(PINK, opacity=0.5)
+        # Show the circle being drawn
+        self.play(Create(circle))
 ```
 <small>Example file `example.py`</small>
 ---
@@ -290,106 +297,106 @@
 ---
 
 ```py
-    # Draw two things next to each other
-    # NOTES: Actually generates a static image, not a video.
+# Draw two things next to each other
+# NOTES: Actually generates a static image, not a video.
 
-    class TwoObjects(Scene):
-        def construct(self):
-            square = Square()
-            square.set_fill(BLUE, opacity=1.0)
-            circle = Circle()
-            circle.set_fill(PINK, opacity=1.0)
-            square.next_to(circle, RIGHT)
-            self.add(square)
-            self.add(circle)
+class TwoObjects(Scene):
+    def construct(self):
+        square = Square()
+        square.set_fill(BLUE, opacity=1.0)
+        circle = Circle()
+        circle.set_fill(PINK, opacity=1.0)
+        square.next_to(circle, RIGHT)
+        self.add(square)
+        self.add(circle)
 ```
 ---
 <img src="gfx/TwoObjects_ManimCE_v0.19.0.png" />
 ---
 ```py
-    # Show two objects, one then the next
-    # NOTES: They pop into existence.
+# Show two objects, one then the next
+# NOTES: They pop into existence.
 
-    class TwoObjectsWait(Scene):
-        def construct(self):
-            square = Square()
-            square.set_fill(RED, opacity=1.0)
-            circle = Circle()
-            circle.set_fill(YELLOW, opacity=1.0)
-            square.next_to(circle, RIGHT)
-            self.add(square)
-            self.wait()
-            self.add(circle)
-            self.wait()
+class TwoObjectsWait(Scene):
+    def construct(self):
+        square = Square()
+        square.set_fill(RED, opacity=1.0)
+        circle = Circle()
+        circle.set_fill(YELLOW, opacity=1.0)
+        square.next_to(circle, RIGHT)
+        self.add(square)
+        self.wait()
+        self.add(circle)
+        self.wait()
 ```
 ---
 <video src="gfx/TwoObjectsWait.mp4" controls></video>
 ---
 
 ```py
-    # Draw two objects, one then the next
-    # NOTES: `Create` animates drawing based on
-    #        vectorization of shape.
+# Draw two objects, one then the next
+# NOTES: `Create` animates drawing based on
+#        vectorization of shape.
 
-    class TwoObjectsDraw(Scene):
-        def construct(self):
-            square = Square()
-            square.set_fill(GREEN, opacity=1.0)
-            circle = Circle()
-            circle.set_fill(PURPLE, opacity=1.0)
-            square.next_to(circle, RIGHT)
-            self.play(Create(square))
-            self.wait()
-            self.play(Create(circle))
-            self.wait()
+class TwoObjectsDraw(Scene):
+    def construct(self):
+        square = Square()
+        square.set_fill(GREEN, opacity=1.0)
+        circle = Circle()
+        circle.set_fill(PURPLE, opacity=1.0)
+        square.next_to(circle, RIGHT)
+        self.play(Create(square))
+        self.wait()
+        self.play(Create(circle))
+        self.wait()
 ```
 ---
 <video src="gfx/TwoObjectsDraw.mp4" controls></video>
 ---
 ```py
-    # Draw three objects with manual positioning
+# Draw three objects with manual positioning
 
-    class ThreeObjects(Scene):
-        def construct(self):
-            for i in range(3):
-                square = Square()
-                square.shift(RIGHT * 3 * i + LEFT * 3)
-                self.play(Create(square))
-                self.wait()
+class ThreeObjects(Scene):
+    def construct(self):
+        for i in range(3):
+            square = Square()
+            square.shift(RIGHT * 3 * i + LEFT * 3)
+            self.play(Create(square))
+            self.wait()
 ```
 ---
 <video src="gfx/ThreeObjects.mp4" controls></video>
 ---
 ```py
-    # Draw shapes with different positions and alignments
+# Draw shapes with different positions and alignments
 
-    class ObjectPlacement(Scene):
-        def construct(self):
-            circle = Circle()
-            square = Square()
-            triangle = Triangle()
-            circle.move_to(LEFT * 2)
-            square.next_to(circle, LEFT)
-            triangle.align_to(circle, LEFT)
-            self.add(circle, square, triangle)
-            self.wait(1)
+class ObjectPlacement(Scene):
+    def construct(self):
+        circle = Circle()
+        square = Square()
+        triangle = Triangle()
+        circle.move_to(LEFT * 2)
+        square.next_to(circle, LEFT)
+        triangle.align_to(circle, LEFT)
+        self.add(circle, square, triangle)
+        self.wait(1)
 ```
 ---
 <video src="gfx/ObjectPlacement.mp4" controls></video>
 ---
 
 ```py
-    # Draws a square not at default position then slide left
-    # NOTES: `shift()` does adjustment immediately,
-    #        `animate.shift()` makes an animation.
+# Draws a square not at default position then slide left
+# NOTES: `shift()` does adjustment immediately,
+#        `animate.shift()` makes an animation.
 
-    class ShiftObject(Scene):
-        def construct(self):
-            square = Square()
-            square.shift(RIGHT * 2)
-            square.set_fill(RED, opacity=0.5)
-            self.play(Create(square))
-            self.play(square.animate.shift(LEFT * 2))
+class ShiftObject(Scene):
+    def construct(self):
+        square = Square()
+        square.shift(RIGHT * 2)
+        square.set_fill(RED, opacity=0.5)
+        self.play(Create(square))
+        self.play(square.animate.shift(LEFT * 2))
 ```
 
 ---
@@ -397,49 +404,96 @@
 ---
 
 ```py
-    # Draws a square and a circle then slides them to the right
-    # NOTES: We construct a `VGroup` to contain multiple
-    #        `Mobject`s.
+# Draws a square and a circle then slides them to the right
+# NOTES: We construct a `VGroup` to contain multiple
+#        `Mobject`s.
 
-    class ShiftObjects(Scene):
-        def construct(self):
-            square = Square()
-            circle = Circle()
-            circle.next_to(square, RIGHT)
-            group = VGroup()
-            group.add(square)
-            group.add(circle)
-            self.play(Create(group))
-            self.play(group.animate.shift(RIGHT))
+class ShiftObjects(Scene):
+    def construct(self):
+        square = Square()
+        circle = Circle()
+        circle.next_to(square, RIGHT)
+        group = VGroup()
+        group.add(square)
+        group.add(circle)
+        self.play(Create(group))
+        self.play(group.animate.shift(RIGHT))
 ```
 ---
 <video src="gfx/ShiftObjects.mp4" controls></video>
 ---
 
 ```py
-    # Draws a rectangle, rectangle with internal grid, and arrow
-    # NOTES: Uses `get_center()` and `get_top()` to get points
-    #        of existing `Mobject`s.
-    class DemoObjects(Scene):
-        def construct(self):
-            rect = Rectangle(width=2.0, height=4.0)
-            grid = Rectangle(width=4.0, height=2.0,
-                    grid_xstep=1.0, grid_ystep=1.0)
-            grid.next_to(rect, RIGHT)
-            arrow = Arrow(start=grid.get_center(),
-                    end=rect.get_top(), buff=0, color=YELLOW)
-            group = VGroup()
-            group.add(rect, grid, arrow)
-            self.play(Create(group), run_time=4.0)
-            self.wait()
+# Draws a rectangle, rectangle with internal grid, and arrow
+# NOTES: Uses `get_center()` and `get_top()` to get points
+#        of existing `Mobject`s.
+class DemoObjects(Scene):
+    def construct(self):
+        rect = Rectangle(width=2.0, height=4.0)
+        grid = Rectangle(width=4.0, height=2.0,
+                         grid_xstep=1.0, grid_ystep=1.0)
+        grid.next_to(rect, RIGHT)
+        arrow = Arrow(start=grid.get_center(), buff=0,
+                      end=rect.get_top(), color=YELLOW)
+        group = VGroup()
+        group.add(rect, grid, arrow)
+        self.play(Create(group), run_time=4.0)
+        self.wait()
 ```
 
 ---
 <video src="gfx/DemoObjects.mp4" controls></video>
 ---
+## CS Examples
+---
 
+```py stretch
+# Show a representation of a linked list with arrows
+## NOTES: Uses `next_to()` with `buff` to space out.
 
+class LinkedList1(Scene):
+    def construct(self):
+        node1 = Rectangle(width=2.0, height=1.0,
+                          grid_xstep=1.0)
+        node2 = Rectangle(width=2.0, height=1.0,
+                          grid_xstep=1.0)
+        node2.next_to(node1, RIGHT, buff=1.0)
+        arrow12 = Arrow(start=node1.get_center() + RIGHT / 2,
+                        end=node2.get_left(), buff=0)
+        node3 = Rectangle(width=2.0, height=1.0,
+                          grid_xstep=1.0)
+        node3.next_to(node2, RIGHT, buff=1.0)
+        arrow23 = Arrow(start=node2.get_center() + RIGHT / 2,
+                        end=node3.get_left(), buff=0)
+        group = VGroup(node1, node2, node3, arrow12, arrow23)
+        group.shift(LEFT * 2.0)
+        self.play(Create(group))
+        self.wait()
+```
 
+---
+<video src="gfx/LinkedList1.mp4" controls></video>
+---
+
+```py
+# Show a linked list animation for removing middle element
+
+class LinkedListRemove(Scene):
+    def construct(self):
+        # ... Same setup code as LinkedList1
+        self.play(Create(group))
+        self.wait()
+        self.play(FadeOut(node2, arrow23))
+        self.wait()
+        arrow13 = Arrow(start=node1.get_center() + RIGHT / 2,
+                        end=node3.get_left(), buff=0)
+        self.play(Transform(arrow12, arrow13))
+        self.wait()
+```
+
+---
+<video src="gfx/LinkedListRemove.mp4" controls></video>
+---
 
 
 
