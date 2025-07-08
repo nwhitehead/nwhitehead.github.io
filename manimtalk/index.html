@@ -707,6 +707,43 @@ class MLP(Scene):
 <video src="gfx/MLP.mp4" controls></video>
 ---
 
+```py stretch
+def gru():
+    positions = [ (-2, -1), (2, -1), (-1, -6),
+        # ... more
+    ]
+    contents = [
+        LinearActivation(txt=r'Reset', inputs=2),
+        LinearActivation(txt=r'Update', inputs=2),
+        OpBox('⊙').scale(0.5),
+        # ... more
+    ]
+    edges = [ ((0, 0), (3, 0)), ((1, 0), (16, 0)),
+        # ... more
+    ]
+    v = VGroup()
+    for i in range(len(positions)):
+        x, y = positions[i]
+        v.add(contents[i].shift((RIGHT * x + UP * y)))
+    for edge in edges:
+        (i, i_n), (j, j_n) = edge
+        start = contents[i].get_outputs()[i_n]
+        end = contents[j].get_inputs()[j_n]
+        line = Line(start, end, buff=0, stroke_width=4.0)
+        v.add(line)
+    return v
+```
+---
+```py stretch
+class GRUScene(Scene):
+    def construct(self):
+        g = gru().scale(0.7).shift(UP * 2.7)
+        self.play(Create(g, run_time=6.0))
+        self.wait(1)
+```
+---
+<video src="gfx/GRUScene.mp4" controls></video>
+---
 
 
 
