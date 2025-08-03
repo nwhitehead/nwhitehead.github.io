@@ -63,6 +63,7 @@ Some of the artists I'm thinking about covering:
 * [v3ga (Julien Gachadoat)](https://www.v3ga.net/)
 * [Inigo Quilez](https://iquilezles.org/)
 * [Ben Kovach](https://bendotk.com)
+* [Antonio Sánchez Chinchón](https://fronkonstin.com)
 
 This exhibit has lots of artists to investigate:
 [Bridges 2025 Exhibition of Mathematical Art, Craft, and Design](https://gallery.bridgesmathart.org/exhibitions/bridges-2025-exhibition-of-mathematical-art)
