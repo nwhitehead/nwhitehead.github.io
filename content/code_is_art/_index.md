@@ -17,7 +17,11 @@ can also have a section for audience presentation of their works.
 
 ## When
 
-Next meeting is Wednesday, Aug. 6, 6-7pm. The intention is to have it monthly.
+First meeting was Wednesday, Aug. 6, 6-7pm, 2025, and covered [Danielle Navarro](https://djnavarro.net/).
+
+Next meeting is Wed., Sep. 3, 6-7pm.
+
+The intention is to have the meeting mothly on the first Wednesday of each month.
 
 ## Where
 
