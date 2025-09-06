@@ -1,6 +1,11 @@
 # Code == Art
 
-<img src="/poster.svg" />
+Next meeting is *Oct. 1, 2025, 6-7pm, Bown Library!, Boise, ID*.
+
+## Posters
+
+<video width=400px src="/poster2.mp4" autoplay loop muted></video>
+<img width=400px src="/poster.svg" />
 
 ## What
 
@@ -17,15 +22,24 @@ can also have a section for audience presentation of their works.
 
 ## When
 
-First meeting was Wednesday, Aug. 6, 6-7pm, 2025, and covered [Danielle Navarro](https://djnavarro.net/).
-
-Next meeting is Wed., Sep. 3, 6-7pm.
+Next meeting is *Oct. 1, 2025, 6-7pm*.
 
 The intention is to have the meeting monthly on the first Wednesday of each month.
 
+Past meetings:
+
+* Wed., Aug. 6, 6-7pm, 2025, covered [Danielle Navarro](https://djnavarro.net/), presented by Nathan Whitehead.
+* Wed., Sep. 3, 6-7pm, 2025, covered [Inigo Quilez](https://iquilezles.org/), presented by Jim McKeeth.
+
+
 ## Where
 
-[*Library! at Bown Crossing*, Martie Brennan Multipurpose Room, 2153 E. Riverwalk Dr. Boise, ID 83706](https://maps.app.goo.gl/3nG9WhnpjW6GZ9Gr5).
+[*Library! at Bown Crossing*, David Eberle Room, 2153 E. Riverwalk Dr. Boise, ID 83706](https://maps.app.goo.gl/3nG9WhnpjW6GZ9Gr5).
+
+## Discord
+
+The Boise Software Developer Group (BSDG) has a discord. *Code==Art* has a channel there called [*#creative-coding*](https://discord.gg/SaE972DFvX).
+Follow the link for an invite in case you're not already on the discord.
 
 ## Who
 
@@ -39,7 +53,7 @@ an integral part of the artwork.
 
 <figure>
 <img src="/cosmos1.jpg" />
-<figcaption>Me trying to help a student debug their code at a programming summer camp (COSMOS UCSC).</figcaption>
+<figcaption>Me trying to help a student debug their code at a programming summer camp (COSMOS UCSC, 2006).</figcaption>
 </figure>
 
 You should stop by if you are interested in seeing some cool art and hearing
@@ -57,19 +71,29 @@ Some of the techniques I'm interested in:
 
 ## Artists
 
-Some of the artists I'm thinking about covering:
+Some artists I'm thinking about covering:
 
-* [Danielle Navarro](https://djnavarro.net/)
 * [Casey Reas](https://reas.com/)
 * [anders hoff](https://inconvergent.net/)
 * [Zancan](https://www.bitforms.art/exhibition/tree_line)
 * [Tyler Hobbs](https://www.tylerxhobbs.com/)
 * [v3ga (Julien Gachadoat)](https://www.v3ga.net/)
-* [Inigo Quilez](https://iquilezles.org/)
 * [Ben Kovach](https://bendotk.com)
 * [Antonio Sánchez Chinchón](https://fronkonstin.com)
 
 This exhibit has lots of artists to investigate:
 [Bridges 2025 Exhibition of Mathematical Art, Craft, and Design](https://gallery.bridgesmathart.org/exhibitions/bridges-2025-exhibition-of-mathematical-art)
+
+Other potential themes to explore:
+
+* Code poetry
+* Live music coding performance
+* Live shader programming competitions
+* NFTs and generative art
+* ByteBeat algorithmic music
+
+## Presenting
+
+If you would like to present, email me at nwhitehe@gmail.com or message me on the BSDG discord.
 
 ## Hope to see you at the meetup!
