@@ -1,11 +1,12 @@
 # Code == Art
 
-Next meeting is *Oct. 1, 2025, 6-7pm, Bown Library!, Boise, ID*.
+There is currently no next meeting, you'll hear about new meetings here!
 
 ## Posters
 
-<video width=400px src="/poster2.mp4" autoplay loop muted></video>
-<img width=400px src="/poster.svg" />
+<img width="400px" src="/poster3.png" />
+<video width="400px" src="/poster2.mp4" autoplay loop muted></video>
+<img width="400px" src="/poster.svg" />
 
 ## What
 
@@ -22,14 +23,14 @@ can also have a section for audience presentation of their works.
 
 ## When
 
-Next meeting is *Oct. 1, 2025, 6-7pm*.
-
 The intention is to have the meeting monthly on the first Wednesday of each month.
 
 Past meetings:
 
 * Wed., Aug. 6, 6-7pm, 2025, covered [Danielle Navarro](https://djnavarro.net/), presented by Nathan Whitehead.
 * Wed., Sep. 3, 6-7pm, 2025, covered [Inigo Quilez](https://iquilezles.org/), presented by Jim McKeeth.
+* Wed., Oct. 1, 6-7pm, 2025, covered [Julien Gachadoat](https://www.v3ga.net/), presented by Nathan Whitehead. We also
+covered Quines and code as art, presented by Katia Hayati.
 
 
 ## Where
@@ -77,7 +78,6 @@ Some artists I'm thinking about covering:
 * [anders hoff](https://inconvergent.net/)
 * [Zancan](https://www.bitforms.art/exhibition/tree_line)
 * [Tyler Hobbs](https://www.tylerxhobbs.com/)
-* [v3ga (Julien Gachadoat)](https://www.v3ga.net/)
 * [Ben Kovach](https://bendotk.com)
 * [Antonio Sánchez Chinchón](https://fronkonstin.com)
 
